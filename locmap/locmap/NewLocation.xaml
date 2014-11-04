@@ -29,21 +29,49 @@
         <!--ContentPanel - Actual interface for adding new location-->
         <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <TextBox x:Name="txtTitle" Text="Title" />
-            <TextBox x:Name="txtDescription" Text="Description" />
-            
+            <TextBox x:Name="txtDescription" Text="Description" Height="220" />
+
             <!-- Grid for coordinates and fetch coordinates buttons -->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBox x:Name="txtLatitude" Text="Latitude" />
+                    <TextBox x:Name="txtLongitude" Text="Longitude"/>
+                </StackPanel>
+                <Button Grid.Column="1" x:Name="btnCoordinates" Content="btn" HorizontalAlignment="Right">
+                    <!-- Image here -->
+                </Button>
+            </Grid>
+            
+            <!-- Camera-button and Image preview-->
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="1">
-                    
-                </StackPanel>
+                <Button x:Name="btnCamera" Grid.Column="0" Margin="2 2 2 2">
+                    <Image Source="Images/feature.camera.png" Height="100" Width="100"/>
+                </Button>
+                <Image x:Name="imgPreview" Grid.Column="2" Height="100" Width="100" Margin="2 2 4 2">
+                </Image>
+            </Grid>
+
+            <!-- Buttons to cancel and save -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" x:Name="btnCancel" Content="Cancel" />
+                <Button Grid.Column="1" x:Name="btnSave" Content="Save" />
             </Grid>
         </StackPanel>
     </Grid>
