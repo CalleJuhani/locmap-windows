@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -14,66 +15,69 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer>
+        <Grid x:Name="LayoutRoot" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="{Binding Path=LocalizedResources.NewLocation, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+            <!--TitlePanel contains the name of the application and page title-->
+            <StackPanel Grid.Row="0" Margin="12,17,0,28">
+                <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+                <TextBlock Text="{Binding Path=LocalizedResources.NewLocation, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            </StackPanel>
 
-        <!--ContentPanel - Actual interface for adding new location-->
-        <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBox x:Name="txtTitle" Text="Title" />
-            <TextBox x:Name="txtDescription" Text="Description" Height="220" />
+            <!--ContentPanel - Actual interface for adding new location-->
+            <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
 
-            <!-- Grid for coordinates and fetch coordinates buttons -->
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <TextBox x:Name="txtLatitude" Text="Latitude" />
-                    <TextBox x:Name="txtLongitude" Text="Longitude"/>
-                </StackPanel>
-                <Button Grid.Column="1" x:Name="btnCoordinates" Content="btn" HorizontalAlignment="Right">
-                    <!-- Image here -->
-                </Button>
-            </Grid>
-            
-            <!-- Camera-button and Image preview-->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Button x:Name="btnCamera" Grid.Column="0" Margin="2 2 2 2">
-                    <Image Source="Images/feature.camera.png" Height="100" Width="100"/>
-                </Button>
-                <Image x:Name="imgPreview" Grid.Column="2" Height="100" Width="100" Margin="2 2 4 2">
-                </Image>
-            </Grid>
+                <toolkit:PhoneTextBox x:Name="txtNewLocationTitle" Hint="Title" />
+                <toolkit:PhoneTextBox x:Name="txtNewLocationDescription" Hint="Description" Height="220"  />
 
-            <!-- Buttons to cancel and save -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <!-- Grid for coordinates and fetch coordinates buttons -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <toolkit:PhoneTextBox x:Name="txtNewLocationLatitude" Hint="Latitude" />
+                        <toolkit:PhoneTextBox x:Name="txtNewLocationLongitude" Hint="Longitude"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" x:Name="btnNewLocationCoordinates" Content="btn" HorizontalAlignment="Right">
+                        <!-- Image here -->
+                    </Button>
+                </Grid>
 
-                <Button Grid.Column="0" x:Name="btnCancel" Content="Cancel" />
-                <Button Grid.Column="1" x:Name="btnSave" Content="Save" />
-            </Grid>
-        </StackPanel>
-    </Grid>
+                <!-- Camera-button and Image preview-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnNewLocationCamera" Grid.Column="0" Margin="2 2 2 2">
+                        <Image Source="Images/feature.camera.png" Height="100" Width="100"/>
+                    </Button>
+                    <Image x:Name="imgNewLocationPreview" Grid.Column="2" Height="100" Width="100" Margin="2 2 4 2">
+                    </Image>
+                </Grid>
+
+                <!-- Buttons to cancel and save -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" x:Name="btnNewLocationCancel" Content="Cancel" />
+                    <Button Grid.Column="1" x:Name="btnNewLocationSave" Content="Save" />
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 
 </phone:PhoneApplicationPage>

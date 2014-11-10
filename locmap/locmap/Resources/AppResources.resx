@@ -137,4 +137,7 @@
   <data name="NewLocation" xml:space="preserve">
     <value>New Location</value>
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log in</value>
+  </data>
 </root>
