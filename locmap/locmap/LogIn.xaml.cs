@@ -10,9 +10,9 @@ using Microsoft.Phone.Shell;
 
 namespace locmap
 {
-    public partial class Page2 : PhoneApplicationPage
+    public partial class LogIn : PhoneApplicationPage
     {
-        public Page2()
+        public LogIn()
         {
             InitializeComponent();
         }
