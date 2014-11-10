@@ -45,7 +45,7 @@
                         </Style>
                     </Grid.Resources>
                     <TextBlock Grid.Column="0" Text="Not a member yet?" />
-                    <TextBlock Grid.Column="1" Foreground="#0000FF" TextDecorations="Underline" Padding="10 0 0 1" x:Name="txtLogInRegister" Text="Register!" />
+                    <TextBlock Grid.Column="1" Foreground="#0000FF" TextDecorations="Underline" Padding="10 0 0 1" x:Name="txtLogInRegister" Text="Register!" Tap="txtLogInRegister_Tap" />
                 </Grid>
             </StackPanel>
         </Grid>
