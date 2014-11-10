@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:con="clr-namespace:CS.Windows.Controls;assembly=CS.Windows.Controls"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -31,7 +32,7 @@
             <!--ContentPanel - place additional content here-->
             <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                 <toolkit:PhoneTextBox x:Name="txtLogInUser" Hint="Username" />
-                <toolkit:PhoneTextBox x:Name="txtLogInPassword" Hint="Password" />
+                <con:WatermarkPasswordBox x:Name="txtLogInPassword" WatermarkText="Password" />
                 <Button x:Name="btnLogIn" Content="Log in" />
                 <Grid Margin="0 20 0 0">
                     <Grid.ColumnDefinitions>
