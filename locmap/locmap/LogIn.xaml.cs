@@ -16,5 +16,10 @@ namespace locmap
         {
             InitializeComponent();
         }
+
+        private void txtLogInRegister_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Register.xaml", UriKind.Relative));    
+        }
     }
 }
