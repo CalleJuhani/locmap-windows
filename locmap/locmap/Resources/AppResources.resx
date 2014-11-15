@@ -143,4 +143,11 @@
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="BaseUrl" xml:space="preserve">
+    <value>http://api.locmap.net/</value>
+    <comment>"Body" For all API requests</comment>
+  </data>
+  <data name="RegisterUrl" xml:space="preserve">
+    <value>v1/auth/register/</value>
+  </data>
 </root>

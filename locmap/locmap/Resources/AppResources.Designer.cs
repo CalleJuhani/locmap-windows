@@ -88,6 +88,15 @@ namespace locmap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://api.locmap.net/.
+        /// </summary>
+        public static string BaseUrl {
+            get {
+                return ResourceManager.GetString("BaseUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string LogIn {
@@ -111,6 +120,15 @@ namespace locmap.Resources {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v1/auth/register/.
+        /// </summary>
+        public static string RegisterUrl {
+            get {
+                return ResourceManager.GetString("RegisterUrl", resourceCulture);
             }
         }
         

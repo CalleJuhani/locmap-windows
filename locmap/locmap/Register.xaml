@@ -30,10 +30,12 @@
 
         <!--ContentPanel - place additional content here-->
         <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <toolkit:PhoneTextBox x:Name="txtRegisterUser" Hint="Username" />
-            <toolkit:PhoneTextBox x:Name="txtRegisterEmail" Hint="Email" />
-            <con:WatermarkPasswordBox x:Name="txtRegisterPassword" WatermarkText="Password" />
-            <con:WatermarkPasswordBox x:Name="txtRegisterPasswordConf" WatermarkText="Confirm password" />
+            <toolkit:PhoneTextBox Text="hh" x:Name="txtRegisterUser" Hint="Username" />
+            <toolkit:PhoneTextBox Text="hh@hh.com" x:Name="txtRegisterEmail" Hint="Email" />
+            <con:WatermarkPasswordBox Password="hhhh" x:Name="txtRegisterPassword" WatermarkText="Password" />
+            <con:WatermarkPasswordBox Password="hhhh" x:Name="txtRegisterPasswordConf" WatermarkText="Confirm password" />
+            <TextBlock x:Name="txtRegisterResponse" TextWrapping="Wrap" Height="auto" />
+            <Button x:Name="btnRegister" Content="Register" Click="btnRegister_Click"/>
         </StackPanel>
     </Grid>
 
