@@ -167,5 +167,14 @@ namespace locmap.Resources {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to locmap_token.
+        /// </summary>
+        public static string TokenKey {
+            get {
+                return ResourceManager.GetString("TokenKey", resourceCulture);
+            }
+        }
     }
 }

@@ -156,4 +156,7 @@
   <data name="LogInUrl" xml:space="preserve">
     <value>v1/auth/login/</value>
   </data>
+  <data name="TokenKey" xml:space="preserve">
+    <value>locmap_token</value>
+  </data>
 </root>

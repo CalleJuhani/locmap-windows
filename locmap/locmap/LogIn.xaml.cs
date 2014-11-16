@@ -67,7 +67,6 @@ namespace locmap
             appSettings.Remove(EmailKey);
             appSettings.Remove(PasswordKey);
 
-            string token;
             JObject jsonObject = new JObject();
             jsonObject["email"] = txtLogInEmail.Text;
             jsonObject["password"] = txtLogInPassword.Password;
@@ -91,7 +90,7 @@ namespace locmap
                 List<string> tokens = (List<string>)response.Headers.GetValues("x-access-token");
                 if (tokens.Count == 1)
                 {
-                    token = tokens[0];
+                    appSettings.Add(AppResources.TokenKey, tokens[0]);
                     status = "Logged in";
                 }
                 else status = "Log in failed for a strange reason. Contact app administrator.";
@@ -103,6 +102,15 @@ namespace locmap
             }
 
             txtLogInStatus.Text = status;
+        }
+
+        private void checkRemember_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!(bool)checkRemember.IsChecked)
+            {
+                appSettings.Remove(EmailKey);
+                appSettings.Remove(PasswordKey);
+            }
         }
     }
 }
