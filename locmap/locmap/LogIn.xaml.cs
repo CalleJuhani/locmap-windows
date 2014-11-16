@@ -9,14 +9,46 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Newtonsoft.Json.Linq;
 using locmap.Resources;
+using System.IO.IsolatedStorage;
 
 namespace locmap
 {
+
     public partial class LogIn : PhoneApplicationPage
     {
+        
+        private IsolatedStorageSettings appSettings;
+        private const string EmailKey = "locmap_email";
+        private const string PasswordKey = "locmap_password";
+
         public LogIn()
         {
             InitializeComponent();
+            appSettings = IsolatedStorageSettings.ApplicationSettings;
+        }
+
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            // get email from storage
+            if (appSettings.Contains(EmailKey))
+            {
+                txtLogInEmail.Text = (string)appSettings[EmailKey];
+                checkRemember.IsChecked = true;
+            }
+            else txtLogInEmail.Text = "";
+
+            // get pw from storage
+            if (appSettings.Contains(PasswordKey))
+            {
+                txtLogInPassword.Password = (string)appSettings[PasswordKey];
+                checkRemember.IsChecked = true;
+            }
+            else txtLogInPassword.Password = "";
+
+
         }
 
         /// <summary>
@@ -32,11 +64,20 @@ namespace locmap
         /// </summary>
         private async void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
+            appSettings.Remove(EmailKey);
+            appSettings.Remove(PasswordKey);
+
             string token;
             JObject jsonObject = new JObject();
             jsonObject["email"] = txtLogInEmail.Text;
             jsonObject["password"] = txtLogInPassword.Password;
             string json = jsonObject.ToString();
+
+            if ((bool)checkRemember.IsChecked)
+            {
+                appSettings.Add(EmailKey, txtLogInEmail.Text);
+                appSettings.Add(PasswordKey, txtLogInPassword.Password);
+            }
 
             HttpResponseMessage response = await BLL.Network.PostApi(AppResources.LogInUrl, json);
 
