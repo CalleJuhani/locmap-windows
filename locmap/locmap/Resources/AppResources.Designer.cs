@@ -97,11 +97,29 @@ namespace locmap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Problems with connecting to the Internet. Check your connection and try again.
+        /// </summary>
+        public static string CheckInternet {
+            get {
+                return ResourceManager.GetString("CheckInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string LogIn {
             get {
                 return ResourceManager.GetString("LogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v1/auth/login/.
+        /// </summary>
+        public static string LogInUrl {
+            get {
+                return ResourceManager.GetString("LogInUrl", resourceCulture);
             }
         }
         

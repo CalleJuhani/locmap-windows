@@ -31,21 +31,25 @@
 
             <!--ContentPanel - place additional content here-->
             <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-                <toolkit:PhoneTextBox x:Name="txtLogInUser" Hint="Username" />
-                <con:WatermarkPasswordBox x:Name="txtLogInPassword" WatermarkText="Password" />
-                <Button x:Name="btnLogIn" Content="Log in" />
-                <Grid Margin="0 20 0 0">
+                <toolkit:PhoneTextBox Text="hh@hh.com" x:Name="txtLogInEmail" Hint="Email" />
+                <con:WatermarkPasswordBox Password="hhhh" x:Name="txtLogInPassword" WatermarkText="Password" />
+                <TextBlock x:Name="txtLogInStatus" TextWrapping="Wrap" Height="Auto" />
+                <Button x:Name="btnLogIn" Content="Log in" Click="btnLogIn_Click" />
+                <Grid Margin="10 20 0 0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.Resources> 
                         <Style TargetType="TextBlock">
                             <Setter Property="FontSize" Value="22" />
+                            <Setter Property="Padding" Value="0 10" />
                         </Style>
                     </Grid.Resources>
                     <TextBlock Grid.Column="0" Text="Not a member yet?" />
-                    <TextBlock Grid.Column="1" Foreground="#0000FF" TextDecorations="Underline" Padding="10 0 0 1" x:Name="txtLogInRegister" Text="Register!" Tap="txtLogInRegister_Tap" />
+                    <TextBlock Grid.Column="1" Width="10" />
+                    <TextBlock Grid.Column="2" Foreground="#0000FF" TextDecorations="Underline" x:Name="txtLogInRegister" Text="Register!" Tap="txtLogInRegister_Tap" />
                 </Grid>
             </StackPanel>
         </Grid>

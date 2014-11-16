@@ -59,7 +59,7 @@ namespace locmap
             // check how request went and change status accordingly
             if (response == null)
             {
-                status = "Problems with connecting to the Internet. Check your connection and try again";
+                status = AppResources.CheckInternet;
             }
             else if (response.IsSuccessStatusCode)
             {

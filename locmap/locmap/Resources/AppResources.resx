@@ -150,4 +150,10 @@
   <data name="RegisterUrl" xml:space="preserve">
     <value>v1/auth/register/</value>
   </data>
+  <data name="CheckInternet" xml:space="preserve">
+    <value>Problems with connecting to the Internet. Check your connection and try again</value>
+  </data>
+  <data name="LogInUrl" xml:space="preserve">
+    <value>v1/auth/login/</value>
+  </data>
 </root>
