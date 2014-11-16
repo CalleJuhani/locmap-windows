@@ -33,7 +33,7 @@
             <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                 <toolkit:PhoneTextBox Text="hh@hh.com" x:Name="txtLogInEmail" Hint="Email" />
                 <con:WatermarkPasswordBox Password="hhhh" x:Name="txtLogInPassword" WatermarkText="Password" />
-                <CheckBox x:Name="checkRemember" Content="Remember my password" />
+                <CheckBox x:Name="checkRemember" Content="Remember my password" Checked="checkRemember_Checked" />
                 <TextBlock x:Name="txtLogInStatus" TextWrapping="Wrap" Height="Auto" />
                 <Button x:Name="btnLogIn" Content="Log in" Click="btnLogIn_Click" />
                 <Grid Margin="10 20 0 0">

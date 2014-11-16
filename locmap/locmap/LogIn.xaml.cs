@@ -87,10 +87,10 @@ namespace locmap
             }
             else if (response.IsSuccessStatusCode)
             {
-                List<string> tokens = (List<string>)response.Headers.GetValues("x-access-token");
+                List<string> tokens = response.Headers.GetValues("x-access-token").ToList();
                 if (tokens.Count == 1)
                 {
-                    appSettings.Add(AppResources.TokenKey, tokens[0]);
+                    appSettings.Add(AppResources.TokenKey, tokens[0].ToString());
                     status = "Logged in";
                 }
                 else status = "Log in failed for a strange reason. Contact app administrator.";
