@@ -26,7 +26,7 @@ namespace locmap
         /// <summary>
         /// Registers user. Internet connection required
         /// </summary>
-        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        private async void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             txtRegisterResponse.Text = "";
             // if email is invalid, return
@@ -42,7 +42,6 @@ namespace locmap
                 txtRegisterResponse.Text = "Password needs to be at least 4 characters long";
             }
 
-
             // if passwords don't match, exit
             if (!txtRegisterPassword.Password.Equals(txtRegisterPasswordConf.Password))
             {
@@ -54,45 +53,28 @@ namespace locmap
             jsonObject["username"] = txtRegisterUser.Text;
             jsonObject["password"] = txtRegisterPassword.Password;
             string json = jsonObject.ToString();
-            SendRegister(json);
-        }
-
-        /// <summary>
-        /// Sends register request to API
-        /// </summary>
-        /// <param name="data">JSON</param>
-        private async void SendRegister(string data)
-        {
+            
+            HttpResponseMessage response = await BLL.Network.PostApi(AppResources.RegisterUrl, json);
             string status = "";
-            try
+            // check how request went and change status accordingly
+            if (response == null)
             {
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(AppResources.BaseUrl);
-
-                    var content = new StringContent(data, Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync(AppResources.RegisterUrl, content);
-
-                    // throws exception if statuscode not 200-299 
-                    response.EnsureSuccessStatusCode();
-
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    if (responseBody.Contains("created"))
-                        status = "Registered succesfully";
-                    else
-                        status = "Register failed. Try with a different username";
-                    
-                }
+                status = "Problems with connecting to the Internet. Check your connection and try again";
             }
-            catch (HttpRequestException ex)
+            else if (response.IsSuccessStatusCode)
             {
-                System.Diagnostics.Debug.WriteLine("Error: "+ ex.Message);
-                System.Diagnostics.Debug.WriteLine("JSON Sent with the error: " + data);
-                status = "Register failed. Try again later.";
-
+                status = "Registered successfully";
+            } 
+            // todo: check if statuscode is 500+ (internal server error etc)
+            else
+            {
+                status = "Registeration failed. Try again with a different username and/or email";
             }
+
             txtRegisterResponse.Text = status;
         }
+
+        
 
         /// <summary>
         /// Just checks that theres @ and . somewhere
