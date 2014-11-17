@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,11 @@ namespace locmap.Models
     /// <summary>
     /// Class hold info for single location
     /// </summary>
-    public class Location
+    public class Location : INotifyPropertyChanged
     {
+        // Occurs when a property value changes
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private float latitude;
         private float longitude;
         private string title;
@@ -20,6 +24,22 @@ namespace locmap.Models
         private string created;
         private List<string> images;
 
+
+        #region Constructors
+
+        public Location()
+        {
+            this.latitude = 0f;
+            this.longitude = 0f;
+            this.title = "";
+            this.id = null;
+            this.description = "";
+            this.updated = "";
+            this.created = "";
+            this.images = new List<string>();
+        }
+
+        #endregion
 
         /**
          * Get and set
@@ -80,6 +100,7 @@ namespace locmap.Models
             set { created = value; }
         }
         #endregion
+
 
         /// <summary>
         /// Adds image to current location

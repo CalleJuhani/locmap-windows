@@ -47,8 +47,6 @@ namespace locmap
                 checkRemember.IsChecked = true;
             }
             else txtLogInPassword.Password = "";
-
-
         }
 
         /// <summary>
@@ -64,6 +62,8 @@ namespace locmap
         /// </summary>
         private async void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
+            BLL.Progress.ShowProgress(this, "Logging in");
+
             appSettings.Remove(EmailKey);
             appSettings.Remove(PasswordKey);
 
@@ -102,8 +102,12 @@ namespace locmap
             }
 
             txtLogInStatus.Text = status;
+            BLL.Progress.HideProgress(this);
         }
 
+        /// <summary>
+        /// Erases email and password from isolated storage when checkbox is unchecked
+        /// </summary>
         private void checkRemember_Checked(object sender, RoutedEventArgs e)
         {
             if (!(bool)checkRemember.IsChecked)
