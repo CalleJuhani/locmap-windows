@@ -43,5 +43,10 @@ namespace locmap
             //NavigationService.Navigate(new Uri("/Register.xaml", UriKind.Relative));
         }
 
+
+        private void MenuViewLocation_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ViewLocation.xaml", UriKind.Relative));
+        }
     }
 }
