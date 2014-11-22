@@ -159,4 +159,7 @@
   <data name="TokenKey" xml:space="preserve">
     <value>locmap_token</value>
   </data>
+  <data name="InternalProblems" xml:space="preserve">
+    <value>Service is temporarily unavailable. Please try again later</value>
+  </data>
 </root>

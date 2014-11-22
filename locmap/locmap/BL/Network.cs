@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace locmap.BLL
+namespace locmap.BL
 {
     public static class Network
     {

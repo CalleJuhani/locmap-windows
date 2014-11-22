@@ -106,6 +106,15 @@ namespace locmap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Service is temporarily unavailable. Please try again later.
+        /// </summary>
+        public static string InternalProblems {
+            get {
+                return ResourceManager.GetString("InternalProblems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string LogIn {

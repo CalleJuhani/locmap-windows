@@ -13,6 +13,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using locmap.Resources;
+using System.Text.RegularExpressions;
 
 namespace locmap
 {
@@ -28,6 +29,7 @@ namespace locmap
         /// </summary>
         private async void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+            
             txtRegisterResponse.Text = "";
             // if email is invalid, return
             if (!IsValidEmail(txtRegisterEmail.Text))
@@ -36,25 +38,21 @@ namespace locmap
                 return;
             }
 
-            // password needs to be at least 4 charachters long
-            if (txtRegisterPassword.Password.Length < 4)
+            string pwMsg = checkPassword(txtRegisterPassword.Password, txtRegisterPasswordConf.Password);
+        
+            if (pwMsg != null)
             {
-                txtRegisterResponse.Text = "Password needs to be at least 4 characters long";
-            }
-
-            // if passwords don't match, exit
-            if (!txtRegisterPassword.Password.Equals(txtRegisterPasswordConf.Password))
-            {
-                txtRegisterResponse.Text = "Passwords don't match.";
+                txtRegisterResponse.Text = pwMsg;
                 return;
             }
+
             JObject jsonObject = new JObject();
             jsonObject["email"] = txtRegisterEmail.Text;
             jsonObject["username"] = txtRegisterUser.Text;
             jsonObject["password"] = txtRegisterPassword.Password;
             string json = jsonObject.ToString();
             
-            HttpResponseMessage response = await BLL.Network.PostApi(AppResources.RegisterUrl, json);
+            HttpResponseMessage response = await BL.Network.PostApi(AppResources.RegisterUrl, json);
             string status = "";
             // check how request went and change status accordingly
             if (response == null)
@@ -63,18 +61,49 @@ namespace locmap
             }
             else if (response.IsSuccessStatusCode)
             {
-                status = "Registered successfully";
+                BL.Misc.showToast("locmap", "Registered succesfully!");
+                NavigationService.Navigate(new Uri("/LogIn.xaml?email=" + txtRegisterEmail.Text, UriKind.Relative));
             } 
-            // todo: check if statuscode is 500+ (internal server error etc)
-            else
+            else if ( ((int)response.StatusCode) == 400)
             {
                 status = "Registeration failed. Try again with a different username and/or email";
+            }
+            else
+            {
+                status = AppResources.InternalProblems;
             }
 
             txtRegisterResponse.Text = status;
         }
 
-        
+
+        /// <summary>
+        /// Check if password fills criteria.
+        /// - At least 8 char long
+        /// - At least 1 char A-Z and 1 number
+        /// - Passwords match
+        /// </summary>
+        /// <param name="password">Password to check</param>
+        /// <returns>Errormessage if password doesn't fill criteria. Null if password OK</returns>
+        private string checkPassword(string password, string passworfConf)
+        {
+            string errMsg = null;
+            if (password.Length < 8)
+            {
+                errMsg = "Password needs to be at least 4 characters long";
+            }
+            else if (Regex.IsMatch(password, ".*[A-Z].*") && Regex.IsMatch(password, ".*[0-9].*"))
+            {
+                errMsg = "Password needs to contain at least one number and one letter A-Z";
+            }
+            // check if pw:s match
+            else if (!password.Equals(passworfConf))
+            {
+                errMsg = "Passwords don't match.";
+            }
+            return errMsg;
+        }
+
 
         /// <summary>
         /// Just checks that theres @ and . somewhere

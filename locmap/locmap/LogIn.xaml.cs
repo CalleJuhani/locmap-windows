@@ -27,10 +27,21 @@ namespace locmap
             appSettings = IsolatedStorageSettings.ApplicationSettings;
         }
 
-
+        /// <summary>
+        /// Set values to email and password -fields if necessary
+        /// </summary>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            
+            String email = "";
+            // check if user came from register -page
+            if (NavigationContext.QueryString.TryGetValue("email", out email))
+            {
+                txtLogInEmail.Text = email;
+                txtLogInPassword.Focus();
+                return;
+            }
 
             // get email from storage
             if (appSettings.Contains(EmailKey))
@@ -62,7 +73,7 @@ namespace locmap
         /// </summary>
         private async void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
-            BLL.Progress.ShowProgress(this, "Logging in");
+            BL.Misc.ShowProgress(this, "Logging in");
 
             appSettings.Remove(EmailKey);
             appSettings.Remove(PasswordKey);
@@ -78,7 +89,7 @@ namespace locmap
                 appSettings.Add(PasswordKey, txtLogInPassword.Password);
             }
 
-            HttpResponseMessage response = await BLL.Network.PostApi(AppResources.LogInUrl, json);
+            HttpResponseMessage response = await BL.Network.PostApi(AppResources.LogInUrl, json);
 
             string status = "";
             if (response == null)
@@ -90,25 +101,26 @@ namespace locmap
                 List<string> tokens = response.Headers.GetValues("x-access-token").ToList();
                 if (tokens.Count == 1)
                 {
+                    appSettings.Remove(AppResources.TokenKey);
                     appSettings.Add(AppResources.TokenKey, tokens[0].ToString());
-                    status = "Logged in";
+                    BL.Misc.showToast("locmap", "Logged in!");
+                    // TODO: Navigate to somewhere perhaps?
                 }
-                else status = "Log in failed for a strange reason. Contact app administrator.";
+                else status = "Log in failed for a strange reason. Try again later.";
                     
             }
             else
             {
                 status = "Login failed. Check your username and password";
             }
-
             txtLogInStatus.Text = status;
-            BLL.Progress.HideProgress(this);
+            BL.Misc.HideProgress(this);
         }
 
         /// <summary>
         /// Erases email and password from isolated storage when checkbox is unchecked
         /// </summary>
-        private void checkRemember_Checked(object sender, RoutedEventArgs e)
+        private void checkRemember_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!(bool)checkRemember.IsChecked)
             {
@@ -116,5 +128,6 @@ namespace locmap
                 appSettings.Remove(PasswordKey);
             }
         }
+
     }
 }

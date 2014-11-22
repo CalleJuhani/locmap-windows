@@ -94,8 +94,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BLL\Network.cs" />
-    <Compile Include="BLL\Progress.cs" />
+    <Compile Include="BL\Network.cs" />
+    <Compile Include="BL\Misc.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -201,6 +201,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Coding4Fun.Toolkit">
+      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.8\lib\windowsphone8\Coding4Fun.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Coding4Fun.Toolkit.Controls">
+      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.8\lib\windowsphone8\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="CS.Windows.Controls">
       <HintPath>..\packages\WindowsPhoneControls.0.3.0\lib\sl4-windowsphone71\CS.Windows.Controls.dll</HintPath>
     </Reference>
@@ -221,6 +227,9 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

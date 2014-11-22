@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Coding4Fun.Toolkit.Controls;
 
-namespace locmap.BLL
+namespace locmap.BL
 {
-    public static class Progress
+    public static class Misc
     {
 
         /// <summary>
@@ -36,6 +37,20 @@ namespace locmap.BLL
             _progressIndicator.IsVisible = false;
 
             SystemTray.SetProgressIndicator(page, _progressIndicator);
+        }
+
+
+        /// <summary>
+        /// Creates and shows toast to user
+        /// </summary>
+        /// <param name="title">Title for the toast</param>
+        /// <param name="message">Toast message</param>
+        public static void showToast(string title, string message)
+        {
+            ToastPrompt toast = new ToastPrompt();
+            toast.Title = title;
+            toast.Message = message;
+            toast.Show();
         }
     }
 }

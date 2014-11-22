@@ -43,7 +43,7 @@ namespace locmap
         /// </summary>
         private void cameraTask_Completed(object sender, PhotoResult e)
         {
-            BLL.Progress.ShowProgress(this, "Working with image");
+            BL.Misc.ShowProgress(this, "Working with image");
             // if photo taken
             if (e.TaskResult == TaskResult.OK)
             {
@@ -53,7 +53,7 @@ namespace locmap
                 imgNewLocationPreview.Source = bmp;
                 //var tempImg = new WriteableBitmap(bmp);
             }
-            BLL.Progress.HideProgress(this);
+            BL.Misc.HideProgress(this);
 
         }
     }
