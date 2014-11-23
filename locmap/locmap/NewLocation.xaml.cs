@@ -13,18 +13,18 @@ using System.Windows.Media.Imaging;
 
 namespace locmap
 {
-    public partial class Page1 : PhoneApplicationPage
+    public partial class NewLocation : PhoneApplicationPage
     {
 
         private CameraCaptureTask cameraTask;
         private Models.Location location;
-
         
-        public Page1()
+        public NewLocation()
         {
             InitializeComponent();
+
             location = new Models.Location();
-            // init cameratask
+            LayoutRoot.DataContext = location;
             cameraTask = new CameraCaptureTask();
             cameraTask.Completed += new EventHandler<PhotoResult>(cameraTask_Completed);
         }
@@ -55,6 +55,11 @@ namespace locmap
             }
             BL.Misc.HideProgress(this);
 
+        }
+
+        private void btnNewLocationCreate_Click(object sender, RoutedEventArgs e)
+        {
+            BL.Misc.showToast("JSON", this.location.ToString());
         }
     }
 }

@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace locmap.Models
 {
@@ -55,7 +57,9 @@ namespace locmap.Models
         public float Latitude
         {
             get { return latitude; }
-            set { latitude = value; }
+            set {
+                latitude = value; 
+            }
         }
 
 
@@ -69,7 +73,10 @@ namespace locmap.Models
         public string Title
         {
             get { return title; }
-            set { title = value; }
+            set { 
+                title = value;
+                OnPropertyChanged("Title");
+            }
         }
 
 
@@ -83,7 +90,10 @@ namespace locmap.Models
         public string Description
         {
             get { return description; }
-            set { description = value; }
+            set { 
+                description = value;
+                OnPropertyChanged("Description");
+            }
         }
 
 
@@ -119,5 +129,31 @@ namespace locmap.Models
         {
             images.Remove(img);
         }
+
+
+        /// <returns>Location as JSON</returns>
+        public override string ToString()
+        {
+            JObject loc = new JObject();
+            loc.Add("title", Title);
+            loc.Add("description", Description);
+            loc.Add("latitude", Latitude);
+            loc.Add("longitude", Longitude);
+
+            return loc.ToString();
+        }
+
+        /// <summary>
+        /// Virtual method to call the Property Changed method
+        /// </summary>
+        /// <param name="propertyName">The name of the property which has changed.</param>
+        protected virtual void OnPropertyChanged(String propertyName)
+        {
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    
     }
+
+
 }

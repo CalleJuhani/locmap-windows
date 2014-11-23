@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="locmap.Page1"
+    x:Class="locmap.NewLocation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -21,7 +21,7 @@
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <ScrollViewer>
-        <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{StaticResource Location}">
+        <Grid x:Name="LayoutRoot" Background="Transparent">
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -37,8 +37,8 @@
             <!--ContentPanel - Actual interface for adding new location-->
             <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
 
-                <toolkit:PhoneTextBox x:Name="txtNewLocationTitle" Hint="Title" />
-                <toolkit:PhoneTextBox x:Name="txtNewLocationDescription" Hint="Description" Height="220"  />
+                <toolkit:PhoneTextBox x:Name="txtNewLocationTitle" Hint="Title" Text="{Binding Path=Title, Mode=TwoWay, UpdateSourceTrigger=Default}" />
+                <toolkit:PhoneTextBox x:Name="txtNewLocationDescription" Hint="Description" Height="220" Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=Default}" />
 
                 <!-- Grid for coordinates and fetch coordinates buttons -->
                 <Grid>
@@ -79,7 +79,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0" x:Name="btnNewLocationCancel" Content="Cancel" />
-                    <Button Grid.Column="1" x:Name="btnNewLocationSave" Content="Save" />
+                    <Button Grid.Column="1" x:Name="btnNewLocationCreate" Content="Create" Click="btnNewLocationCreate_Click" />
                 </Grid>
             </StackPanel>
         </Grid>
