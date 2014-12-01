@@ -133,6 +133,15 @@ namespace locmap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LocationConsent.
+        /// </summary>
+        public static string LocationKey {
+            get {
+                return ResourceManager.GetString("LocationKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string LogIn {

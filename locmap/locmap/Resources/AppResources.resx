@@ -168,4 +168,7 @@
   <data name="AppName" xml:space="preserve">
     <value>locmap</value>
   </data>
+  <data name="LocationKey" xml:space="preserve">
+    <value>LocationConsent</value>
+  </data>
 </root>

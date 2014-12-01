@@ -24,7 +24,7 @@ namespace locmap
         /// </summary>
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            if (BL.Network.appSettings.Contains("LocationConsent"))
+            if (BL.Network.appSettings.Contains(AppResources.LocationKey))
             {
                 // User has opted in or out of Location
                 return;
@@ -38,11 +38,11 @@ namespace locmap
 
                 if (result == MessageBoxResult.OK)
                 {
-                    BL.Network.appSettings["LocationConsent"] = true;
+                    BL.Network.appSettings[AppResources.LocationKey] = true;
                 }
                 else
                 {
-                    BL.Network.appSettings["LocationConsent"] = false;
+                    BL.Network.appSettings[AppResources.LocationKey] = false;
                 }
 
                 BL.Network.appSettings.Save();
