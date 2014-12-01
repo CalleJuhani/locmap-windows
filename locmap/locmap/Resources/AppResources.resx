@@ -162,4 +162,10 @@
   <data name="InternalProblems" xml:space="preserve">
     <value>Service is temporarily unavailable. Please try again later</value>
   </data>
+  <data name="CreateLocation" xml:space="preserve">
+    <value>v1/locations</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>locmap</value>
+  </data>
 </root>
