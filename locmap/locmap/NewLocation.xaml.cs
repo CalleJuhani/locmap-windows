@@ -10,6 +10,8 @@ using Microsoft.Phone.Shell;
 
 using Microsoft.Phone.Tasks;
 using System.Windows.Media.Imaging;
+using locmap.Resources;
+using System.Net.Http;
 
 namespace locmap
 {
@@ -23,8 +25,10 @@ namespace locmap
         {
             InitializeComponent();
 
+            // bind location
             location = new Models.Location();
             LayoutRoot.DataContext = location;
+
             cameraTask = new CameraCaptureTask();
             cameraTask.Completed += new EventHandler<PhotoResult>(cameraTask_Completed);
         }
@@ -57,9 +61,37 @@ namespace locmap
 
         }
 
-        private void btnNewLocationCreate_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Creates new location.
+        /// TODO: Add images also
+        /// </summary>
+        private async void btnNewLocationCreate_Click(object sender, RoutedEventArgs e)
         {
-            BL.Misc.showToast("JSON", this.location.ToString());
+            BL.Misc.ShowProgress(this, "Creating");
+            HttpResponseMessage response = await BL.Network.PostApi(AppResources.CreateLocation, location.ToString());
+            string status = "";
+            BL.Misc.HideProgress(this);
+            
+            if (response == null)
+            {
+                status = AppResources.CheckInternet;
+            }
+            else if (response.IsSuccessStatusCode)
+            {
+                status = "New location created!";
+            }
+            else
+            {
+                status = "Creation failed";
+            }
+
+            BL.Misc.showToast(AppResources.AppName, status);
+        }
+
+        private void btnNewLocationCoordinates_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
