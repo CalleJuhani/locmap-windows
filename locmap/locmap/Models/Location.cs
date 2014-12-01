@@ -57,8 +57,10 @@ namespace locmap.Models
         public float Latitude
         {
             get { return latitude; }
-            set {
-                latitude = value; 
+            set
+            {
+                latitude = value;
+                OnPropertyChanged("Latitude");
             }
         }
 
@@ -66,14 +68,19 @@ namespace locmap.Models
         public float Longitude
         {
             get { return longitude; }
-            set { longitude = value; }
+            set
+            {
+                longitude = value;
+                OnPropertyChanged("Longitude");
+            }
         }
 
 
         public string Title
         {
             get { return title; }
-            set { 
+            set
+            {
                 title = value;
                 OnPropertyChanged("Title");
             }
@@ -90,7 +97,8 @@ namespace locmap.Models
         public string Description
         {
             get { return description; }
-            set { 
+            set
+            {
                 description = value;
                 OnPropertyChanged("Description");
             }
@@ -152,7 +160,7 @@ namespace locmap.Models
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-    
+
     }
 
 

@@ -12,6 +12,7 @@ using Microsoft.Phone.Tasks;
 using System.Windows.Media.Imaging;
 using locmap.Resources;
 using System.Net.Http;
+using Windows.Devices.Geolocation;
 
 namespace locmap
 {
@@ -20,7 +21,7 @@ namespace locmap
 
         private CameraCaptureTask cameraTask;
         private Models.Location location;
-        
+
         public NewLocation()
         {
             InitializeComponent();
@@ -51,7 +52,7 @@ namespace locmap
             // if photo taken
             if (e.TaskResult == TaskResult.OK)
             {
-                
+
                 BitmapImage bmp = new BitmapImage();
                 bmp.SetSource(e.ChosenPhoto);
                 imgNewLocationPreview.Source = bmp;
@@ -72,7 +73,7 @@ namespace locmap
             HttpResponseMessage response = await BL.Network.PostApi(AppResources.CreateLocation, location.ToString());
             string status = "";
             BL.Misc.HideProgress(this);
-            
+
             if (response == null)
             {
                 status = AppResources.CheckInternet;
@@ -89,8 +90,40 @@ namespace locmap
             BL.Misc.showToast(AppResources.AppName, status);
         }
 
-        private void btnNewLocationCoordinates_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Get's users coordinates and fills latitude/longitude fields accordingly.
+        /// Prompts user if location tracking is disabled in app or phone settings
+        /// </summary>
+        private async void btnNewLocationCoordinates_Click(object sender, RoutedEventArgs e)
         {
+            if ((bool)BL.Network.appSettings[AppResources.LocationKey] != true)
+            {
+                BL.Misc.showToast(AppResources.AppName, "Location traking is not enabled");
+                return;
+            }
+
+            Geolocator geolocator = new Geolocator();
+            geolocator.DesiredAccuracyInMeters = 50;
+
+            try
+            {
+                Geoposition geoposition = await geolocator.GetGeopositionAsync( maximumAge: TimeSpan.FromMinutes(5),
+                                                                                timeout: TimeSpan.FromSeconds(10));
+                this.location.Latitude = (float)geoposition.Coordinate.Latitude;
+                this.location.Longitude = (float)geoposition.Coordinate.Longitude;
+            }
+            catch (Exception ex)
+            {
+                if ((uint)ex.HResult == 0x80004004)
+                {
+                    BL.Misc.showToast(AppResources.AppName, "Location is disabled in phone settings");
+                }
+                else
+                { // dont know what has happened
+                    BL.Misc.showToast(AppResources.AppName, "Cannot get location");
+                }
+            }
 
         }
     }
