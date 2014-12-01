@@ -20,6 +20,37 @@ namespace locmap
         }
 
         /// <summary>
+        /// Asks user if location tracking is ok
+        /// </summary>
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (BL.Network.appSettings.Contains("LocationConsent"))
+            {
+                // User has opted in or out of Location
+                return;
+            }
+            else
+            {
+                MessageBoxResult result =
+                    MessageBox.Show("This app accesses your phone's location. Is that ok?",
+                    "Location",
+                    MessageBoxButton.OKCancel);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    BL.Network.appSettings["LocationConsent"] = true;
+                }
+                else
+                {
+                    BL.Network.appSettings["LocationConsent"] = false;
+                }
+
+                BL.Network.appSettings.Save();
+            }
+        }
+
+
+        /// <summary>
         /// Opens Log In Screen
         /// </summary>
         private void MenuLogIn_Click(object sender, EventArgs e)
