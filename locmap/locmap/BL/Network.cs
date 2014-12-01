@@ -2,6 +2,7 @@
 using Microsoft.Phone.Net.NetworkInformation;
 using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -11,6 +12,8 @@ namespace locmap.BL
 {
     public static class Network
     {
+        public static readonly IsolatedStorageSettings appSettings = IsolatedStorageSettings.ApplicationSettings;
+
         /// <summary>
         /// Sends POST request to locmap api 
         /// </summary>
@@ -27,6 +30,11 @@ namespace locmap.BL
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(AppResources.BaseUrl);
+                    string token = "";
+                    if (appSettings.TryGetValue(AppResources.TokenKey, out token))
+                    {
+                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                    }
                     var content = new StringContent(data, Encoding.UTF8, "application/json");
                     HttpResponseMessage response = await client.PostAsync(url, content);
                     return response;
