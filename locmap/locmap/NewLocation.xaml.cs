@@ -97,7 +97,7 @@ namespace locmap
         /// </summary>
         private async void btnNewLocationCoordinates_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)BL.Network.appSettings[AppResources.LocationKey] != true)
+            if (Convert.ToBoolean(BL.Misc.getSettingValue(AppResources.LocationKey)) != true)
             {
                 BL.Misc.showToast(AppResources.AppName, "Location traking is not enabled");
                 return;
