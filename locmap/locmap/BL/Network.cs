@@ -12,7 +12,6 @@ namespace locmap.BL
 {
     public static class Network
     {
-        public static readonly IsolatedStorageSettings appSettings = IsolatedStorageSettings.ApplicationSettings;
 
         /// <summary>
         /// Sends POST request to locmap api 
@@ -30,8 +29,8 @@ namespace locmap.BL
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(AppResources.BaseUrl);
-                    string token = "";
-                    if (appSettings.TryGetValue(AppResources.TokenKey, out token))
+                    string token = Misc.getToken();
+                    if (token != null)
                     {
                         client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                     }
