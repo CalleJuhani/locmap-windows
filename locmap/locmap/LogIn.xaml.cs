@@ -32,7 +32,7 @@ namespace locmap
         {
             base.OnNavigatedTo(e);
             
-            String email = "";
+            string email = "";
             // check if user came from register -page
             if (NavigationContext.QueryString.TryGetValue("email", out email))
             {
@@ -42,17 +42,19 @@ namespace locmap
             }
 
             // get email from storage
-            if (BL.Network.appSettings.Contains(EmailKey))
+            email = BL.Misc.getSettingValue(EmailKey);
+            if (email != null)
             {
-                txtLogInEmail.Text = (string) BL.Network.appSettings[EmailKey];
+                txtLogInEmail.Text = email;
                 checkRemember.IsChecked = true;
             }
             else txtLogInEmail.Text = "";
 
             // get pw from storage
-            if (BL.Network.appSettings.Contains(PasswordKey))
+            string pw = BL.Misc.getSettingValue(PasswordKey);
+            if (pw!=null)
             {
-                txtLogInPassword.Password = (string)BL.Network.appSettings[PasswordKey];
+                txtLogInPassword.Password = pw;
                 checkRemember.IsChecked = true;
             }
             else txtLogInPassword.Password = "";
@@ -73,9 +75,9 @@ namespace locmap
         {
             BL.Misc.ShowProgress(this, "Logging in");
 
-            BL.Network.appSettings.Remove(EmailKey);
-            BL.Network.appSettings.Remove(PasswordKey);
-            BL.Network.appSettings.Remove(AppResources.TokenKey);
+            BL.Misc.removeSetting(EmailKey);
+            BL.Misc.removeSetting(PasswordKey);
+            BL.Misc.removeToken();
 
             JObject jsonObject = new JObject();
             jsonObject["email"] = txtLogInEmail.Text;
@@ -84,8 +86,8 @@ namespace locmap
 
             if ((bool)checkRemember.IsChecked)
             {
-                BL.Network.appSettings.Add(EmailKey, txtLogInEmail.Text);
-                BL.Network.appSettings.Add(PasswordKey, txtLogInPassword.Password);
+                BL.Misc.addSetting(EmailKey, txtLogInEmail.Text);
+                BL.Misc.addSetting(PasswordKey, txtLogInPassword.Password);
             }
 
             HttpResponseMessage response = await BL.Network.PostApi(AppResources.LogInUrl, json);
@@ -100,7 +102,7 @@ namespace locmap
                 List<string> tokens = response.Headers.GetValues("x-access-token").ToList();
                 if (tokens.Count == 1)
                 {
-                    BL.Network.appSettings.Add(AppResources.TokenKey, tokens[0].ToString());
+                    BL.Misc.saveToken(tokens[0].ToString());
                     BL.Misc.showToast(AppResources.AppName, "Logged in!");
                     // TODO: Navigate to somewhere perhaps?
                 }
@@ -122,8 +124,8 @@ namespace locmap
         {
             if (!(bool)checkRemember.IsChecked)
             {
-                BL.Network.appSettings.Remove(EmailKey);
-                BL.Network.appSettings.Remove(PasswordKey);
+                BL.Misc.removeSetting(EmailKey);
+                BL.Misc.removeSetting(PasswordKey);
             }
         }
 
