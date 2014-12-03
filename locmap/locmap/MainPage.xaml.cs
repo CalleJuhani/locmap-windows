@@ -48,6 +48,7 @@ namespace locmap
             JArray locArray = new JArray(locArrayTmp[0]);
             foreach (var loc in locArray.Children())
             {
+                // TODO: FIX THIS!!
                 JObject locObj = new JObject(loc.ToString());
                 locations.Add(new Models.Location(locObj));
             }
