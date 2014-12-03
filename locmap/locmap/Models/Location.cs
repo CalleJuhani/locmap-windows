@@ -41,6 +41,14 @@ namespace locmap.Models
             this.images = new List<string>();
         }
 
+        public Location(JObject location) 
+        {
+            this.latitude = float.Parse(location.GetValue("latitude").ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            this.longitude = float.Parse(location.GetValue("longitude").ToString(), System.Globalization.CultureInfo.InvariantCulture);
+            this.title = location.GetValue("title").ToString();
+            this.description = location.GetValue("description").ToString();
+        }
+
         #endregion
 
         /**

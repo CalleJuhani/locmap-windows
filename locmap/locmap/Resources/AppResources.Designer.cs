@@ -124,6 +124,15 @@ namespace locmap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to v1/locations.
+        /// </summary>
+        public static string getLocationsUrl {
+            get {
+                return ResourceManager.GetString("getLocationsUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Service is temporarily unavailable. Please try again later.
         /// </summary>
         public static string InternalProblems {

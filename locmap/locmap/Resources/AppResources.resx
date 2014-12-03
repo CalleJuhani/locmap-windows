@@ -171,4 +171,7 @@
   <data name="LocationKey" xml:space="preserve">
     <value>LocationConsent</value>
   </data>
+  <data name="getLocationsUrl" xml:space="preserve">
+    <value>v1/locations</value>
+  </data>
 </root>

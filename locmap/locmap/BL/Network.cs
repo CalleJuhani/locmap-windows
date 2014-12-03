@@ -13,6 +13,34 @@ namespace locmap.BL
     public static class Network
     {
 
+
+        /// <summary>
+        /// Sends HTTP GET request to API
+        /// </summary>
+        /// <param name="url">AppResources.BaseUrl + this url</param>
+        /// <returns>HTTP response from server if connected to Internet. Null if not</returns>
+        public static async Task<HttpResponseMessage> GetApi(string url)
+        {
+            // if no internet connection detected
+            if (!isConnectedToNetwork()) return null;
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(AppResources.BaseUrl);
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    return response;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Error with http get to: " + url);
+            }
+            return null;
+        }
+
         /// <summary>
         /// Sends POST request to locmap api 
         /// </summary>
