@@ -36,7 +36,6 @@ namespace locmap
             locationsMapLayer = new MapLayer();
             locations = new List<Models.Location>();
             fillLocationList();
-            getLocations();
         }
 
 
@@ -44,14 +43,19 @@ namespace locmap
         {
             BL.Misc.ShowProgress(this, "Fetching data");
             HttpResponseMessage response = await BL.Network.GetApi(AppResources.getLocationsUrl);
-            JArray locArrayTmp = new JArray(response.Content.ReadAsStringAsync().Result);
-            JArray locArray = new JArray(locArrayTmp[0]);
-            foreach (var loc in locArray.Children())
+            string result = response.Content.ReadAsStringAsync().Result;
+            JObject resBody = JObject.Parse(result);
+            JArray locArray = JArray.Parse(resBody.GetValue("locations").ToString());
+
+            locations = locArray.ToObject<List<Models.Location>>();
+            /*
+            foreach (var locObject in locArray.Children())
             {
-                // TODO: FIX THIS!!
-                JObject locObj = new JObject(loc.ToString());
-                locations.Add(new Models.Location(locObj));
+                JObject locTmp = new JObject(locObject.ToString());
+                locations.Add(new Models.Location(locTmp));
             }
+            */
+            getLocations();
             BL.Misc.HideProgress(this);
         }
 
@@ -80,13 +84,13 @@ namespace locmap
                 }
             }
 
-            // if user allowa it, show his/her location on map by default
+            // if user allows it, show his/her location on map by default
             if (Convert.ToBoolean(BL.Misc.getSettingValue(AppResources.LocationKey)) != true)
             {
                 BL.Misc.showToast(AppResources.AppName, "Location traking is not enabled");
                 return;
             }
-
+            
             Ellipse userLocation = new Ellipse();
             userLocation.Fill = new SolidColorBrush(Colors.Yellow);
             userLocation.Stroke = new SolidColorBrush(Colors.Black);
@@ -106,7 +110,7 @@ namespace locmap
             geolocator.DesiredAccuracy = PositionAccuracy.High;
             geolocator.MovementThreshold = 15; //meters
             geolocator.PositionChanged += geolocator_PositionChanged;
-
+            
         }
 
 
@@ -123,13 +127,23 @@ namespace locmap
                 locationPin.Content = loc.Title;
                 locationPin.GeoCoordinate = new System.Device.Location.GeoCoordinate((double)loc.Latitude, (double)loc.Longitude);
                 locationPin.Visibility = System.Windows.Visibility.Visible;
+                locationPin.Tag = loc.Id;
+                locationPin.Tap += pinPushed;
                 locOverlay = new MapOverlay();
                 locOverlay.Content = locationPin;
+                locOverlay.GeoCoordinate = new System.Device.Location.GeoCoordinate((double)loc.Latitude, (double)loc.Longitude);
                 locationsMapLayer.Add(locOverlay);
             }
-
-            mainPageMap.Layers.Add(userMapLayer);
+            mainPageMap.Layers.Add(locationsMapLayer);
         }
+
+        private void pinPushed(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            Pushpin locId = sender as Pushpin;
+            
+            MessageBox.Show("id: " + locId.Tag);
+        }
+
 
         void geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {

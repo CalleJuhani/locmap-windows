@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace locmap.Models
 {
@@ -25,6 +26,7 @@ namespace locmap.Models
         private string updated;
         private string created;
         private List<string> images;
+        private JToken locObject;
 
 
         #region Constructors
@@ -47,6 +49,9 @@ namespace locmap.Models
             this.longitude = float.Parse(location.GetValue("longitude").ToString(), System.Globalization.CultureInfo.InvariantCulture);
             this.title = location.GetValue("title").ToString();
             this.description = location.GetValue("description").ToString();
+            this.created = location.GetValue("created").ToString();
+            this.updated = location.GetValue("updated").ToString();
+            this.Id = location.GetValue("_id").ToString();
         }
 
         #endregion
@@ -95,6 +100,7 @@ namespace locmap.Models
         }
 
 
+        [JsonProperty("_id")]
         public string Id
         {
             get { return id; }
@@ -159,6 +165,7 @@ namespace locmap.Models
             return loc.ToString();
         }
 
+
         /// <summary>
         /// Virtual method to call the Property Changed method
         /// </summary>
@@ -168,7 +175,6 @@ namespace locmap.Models
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 
 
