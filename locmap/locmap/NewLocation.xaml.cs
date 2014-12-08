@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using locmap.Resources;
 using System.Net.Http;
 using Windows.Devices.Geolocation;
+using Newtonsoft.Json.Linq;
 
 namespace locmap
 {
@@ -21,6 +22,7 @@ namespace locmap
 
         private CameraCaptureTask cameraTask;
         private Models.Location location;
+        private BitmapImage bmp;
 
         public NewLocation()
         {
@@ -53,9 +55,10 @@ namespace locmap
             if (e.TaskResult == TaskResult.OK)
             {
 
-                BitmapImage bmp = new BitmapImage();
+                bmp = new BitmapImage();
                 bmp.SetSource(e.ChosenPhoto);
                 imgNewLocationPreview.Source = bmp;
+                
                 //var tempImg = new WriteableBitmap(bmp);
             }
             BL.Misc.HideProgress(this);
@@ -71,7 +74,7 @@ namespace locmap
         {
             BL.Misc.ShowProgress(this, "Creating");
             HttpResponseMessage response = await BL.Network.PostApi(AppResources.CreateLocation, location.ToString());
-            string status = "";
+            string status = null;
             BL.Misc.HideProgress(this);
 
             if (response == null)
@@ -80,14 +83,30 @@ namespace locmap
             }
             else if (response.IsSuccessStatusCode)
             {
-                status = "New location created!";
+                string locationJson = response.Content.ReadAsStringAsync().Result;
+                JObject locObject = JObject.Parse(locationJson);
+                this.location = locObject.ToObject<Models.Location>();
+                
+                // send photo if necessary
+                if (bmp != null)
+                    sendImage(location.Id, bmp);
+                else
+                    status = "Location created!";
             }
             else
             {
                 status = "Creation failed";
             }
 
-            BL.Misc.showToast(AppResources.AppName, status);
+            if (status != null)
+            {
+                BL.Misc.showToast(AppResources.AppName, status);
+            }
+        }
+
+        private void sendImage(string id, BitmapImage bmp)
+        {
+            BL.Network.PostApi(AppResources.CreateLocation + "/" + id);
         }
 
 
