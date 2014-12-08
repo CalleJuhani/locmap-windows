@@ -48,13 +48,6 @@ namespace locmap
             JArray locArray = JArray.Parse(resBody.GetValue("locations").ToString());
 
             locations = locArray.ToObject<List<Models.Location>>();
-            /*
-            foreach (var locObject in locArray.Children())
-            {
-                JObject locTmp = new JObject(locObject.ToString());
-                locations.Add(new Models.Location(locTmp));
-            }
-            */
             getLocations();
             BL.Misc.HideProgress(this);
         }
@@ -140,8 +133,7 @@ namespace locmap
         private void pinPushed(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Pushpin locId = sender as Pushpin;
-            
-            MessageBox.Show("id: " + locId.Tag);
+            NavigationService.Navigate(new Uri("/ViewLocation.xaml?id=" + locId.Tag, UriKind.Relative));
         }
 
 

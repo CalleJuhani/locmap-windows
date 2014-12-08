@@ -174,4 +174,7 @@
   <data name="getLocationsUrl" xml:space="preserve">
     <value>v1/locations</value>
   </data>
+  <data name="PostImage" xml:space="preserve">
+    <value>v1/images</value>
+  </data>
 </root>

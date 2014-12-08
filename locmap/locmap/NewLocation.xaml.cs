@@ -104,9 +104,12 @@ namespace locmap
             }
         }
 
-        private void sendImage(string id, BitmapImage bmp)
+        private async void sendImage(string id, BitmapImage bmp)
         {
-            BL.Network.PostApi(AppResources.CreateLocation + "/" + id);
+            if (bmp == null) {
+                return;
+            }
+            HttpResponseMessage response = await BL.Network.PostImgApi(AppResources.PostImage, bmp, id);
         }
 
 

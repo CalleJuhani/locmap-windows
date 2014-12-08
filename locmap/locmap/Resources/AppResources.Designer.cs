@@ -178,6 +178,15 @@ namespace locmap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to v1/images.
+        /// </summary>
+        public static string PostImage {
+            get {
+                return ResourceManager.GetString("PostImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string Register {
