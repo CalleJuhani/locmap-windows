@@ -53,8 +53,8 @@
                         <toolkit:PhoneTextBox Text="{Binding Path=Latitude, Mode=TwoWay}" x:Name="txtNewLocationLatitude" Hint="Latitude" />
                         <toolkit:PhoneTextBox Text="{Binding Path=Longitude, Mode=TwoWay}" x:Name="txtNewLocationLongitude" Hint="Longitude"/>
                     </StackPanel>
-                    <Button Grid.Column="1" x:Name="btnNewLocationCoordinates" Content="btn" HorizontalAlignment="Right" Click="btnNewLocationCoordinates_Click">
-                        <!-- Image here -->
+                    <Button Grid.Column="1" x:Name="btnNewLocationCoordinates"  HorizontalAlignment="Right" Click="btnNewLocationCoordinates_Click">
+                        <Image Source="Images/wheel.png" Height="100" Width="100" />
                     </Button>
                 </Grid>
 
