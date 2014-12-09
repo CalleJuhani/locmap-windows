@@ -42,7 +42,6 @@
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Click="MenuLogIn_Click" Text="log in"/>
                 <shell:ApplicationBarMenuItem Click="MenuLocation_Click" Text="add location"/>
-                <shell:ApplicationBarMenuItem Click="MenuViewLocation_Click" Text="view location"/>
                 <shell:ApplicationBarMenuItem Click="MenuRoute_Click" Text="add route" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>

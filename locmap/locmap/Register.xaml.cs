@@ -62,6 +62,7 @@ namespace locmap
             else if (response.IsSuccessStatusCode)
             {
                 BL.Misc.showToast("locmap", "Registered succesfully!");
+                
                 NavigationService.Navigate(new Uri("/LogIn.xaml?email=" + txtRegisterEmail.Text, UriKind.Relative));
             } 
             else if ( ((int)response.StatusCode) == 400)
@@ -90,7 +91,7 @@ namespace locmap
             string errMsg = null;
             if (password.Length < 8)
             {
-                errMsg = "Password needs to be at least 4 characters long";
+                errMsg = "Password needs to be at least 8 characters long";
             }
             else if (Regex.IsMatch(password, ".*[A-Z].*") && Regex.IsMatch(password, ".*[0-9].*"))
             {
