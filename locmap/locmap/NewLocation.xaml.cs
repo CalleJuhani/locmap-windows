@@ -46,7 +46,6 @@ namespace locmap
 
         /// <summary>
         /// When returning from camera
-        /// TODO: bind img to somewhere
         /// </summary>
         private void cameraTask_Completed(object sender, PhotoResult e)
         {
@@ -68,7 +67,6 @@ namespace locmap
 
         /// <summary>
         /// Creates new location.
-        /// TODO: Add images also
         /// </summary>
         private async void btnNewLocationCreate_Click(object sender, RoutedEventArgs e)
         {
@@ -106,10 +104,22 @@ namespace locmap
 
         private async void sendImage(string id, BitmapImage bmp)
         {
-            if (bmp == null) {
+            if (bmp == null) 
+            {
                 return;
             }
+
             HttpResponseMessage response = await BL.Network.PostImgApi(AppResources.PostImage, bmp, id);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                BL.Misc.showToast(AppResources.AppName, "Location added succesfully");
+            }
+            else
+            {
+                BL.Misc.showToast(AppResources.AppName, "Location added but image upload failed");
+            }
+
         }
 
 

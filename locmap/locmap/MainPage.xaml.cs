@@ -38,7 +38,9 @@ namespace locmap
             fillLocationList();
         }
 
-
+        /// <summary>
+        /// Gets locations from API
+        /// </summary>
         private async void fillLocationList()
         {
             BL.Misc.ShowProgress(this, "Fetching data");
@@ -57,6 +59,13 @@ namespace locmap
         /// </summary>
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
+            // change login/logout text in menu
+            if (BL.Misc.getToken() != null)
+            {
+                ApplicationBarMenuItem logout = this.ApplicationBar.MenuItems[0] as ApplicationBarMenuItem;
+                logout.Text = "log out";
+            }
+
             string allowLocation = BL.Misc.getSettingValue(AppResources.LocationKey);
             
             // ask user if location tracking is ok
@@ -108,7 +117,7 @@ namespace locmap
 
 
         /// <summary>
-        /// Gets locations from API and fills maplayer with markers
+        /// Fills maplayer with markers, uses locations list
         /// </summary>
         private void getLocations()
         {
@@ -130,6 +139,11 @@ namespace locmap
             mainPageMap.Layers.Add(locationsMapLayer);
         }
 
+        /// <summary>
+        /// Tap event for pushpin, opens ViewLocation for tapped location
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pinPushed(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Pushpin locId = sender as Pushpin;
@@ -137,6 +151,11 @@ namespace locmap
         }
 
 
+        /// <summary>
+        /// User has moved: changes map focus accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         void geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             System.Diagnostics.Debug.WriteLine("Position Changed");
@@ -158,7 +177,27 @@ namespace locmap
         /// </summary>
         private void MenuLogIn_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/LogIn.xaml", UriKind.Relative));
+            if (BL.Misc.getToken() != null)
+            {
+                Logout();
+            }
+            else
+            {
+                NavigationService.Navigate(new Uri("/LogIn.xaml", UriKind.Relative));
+            }
+        }
+
+
+        /// <summary>
+        /// Logs out user. If network not available, only clears token from appsettings.
+        /// </summary>
+        private async void Logout()
+        {
+            HttpResponseMessage response = await BL.Network.PostApi(AppResources.LogOutUrl, "");
+            BL.Misc.removeToken();
+            BL.Misc.showToast(AppResources.AppName, "Logged out");
+            ApplicationBarMenuItem login = this.ApplicationBar.MenuItems[0] as ApplicationBarMenuItem;
+            login.Text = "log in";
         }
 
         /// <summary>
@@ -169,18 +208,12 @@ namespace locmap
             NavigationService.Navigate(new Uri("/NewLocation.xaml", UriKind.Relative));
         }
 
-        /// <summary>
-        /// TODO: Open add new route -screen
-        /// </summary>
+
         private void MenuRoute_Click(object sender, EventArgs e)
         {
-            //NavigationService.Navigate(new Uri("/Register.xaml", UriKind.Relative));
+            //
         }
 
 
-        private void MenuViewLocation_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/ViewLocation.xaml", UriKind.Relative));
-        }
     }
 }

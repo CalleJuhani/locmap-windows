@@ -56,6 +56,8 @@ namespace locmap.BL
             toast.Show();
         }
 
+
+        /// <returns>Token, null if no token found</returns>
         public static string getToken()
         {
             return getSettingValue(AppResources.TokenKey);

@@ -177,4 +177,7 @@
   <data name="PostImage" xml:space="preserve">
     <value>v1/images</value>
   </data>
+  <data name="LogOutUrl" xml:space="preserve">
+    <value>v1/auth/logout</value>
+  </data>
 </root>

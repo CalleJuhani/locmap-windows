@@ -169,6 +169,15 @@ namespace locmap.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to v1/auth/logout.
+        /// </summary>
+        public static string LogOutUrl {
+            get {
+                return ResourceManager.GetString("LogOutUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Location.
         /// </summary>
         public static string NewLocation {

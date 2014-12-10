@@ -40,7 +40,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Click="MenuLogIn_Click" Text="log in"/>
+                <shell:ApplicationBarMenuItem x:Name="MenuLogIn" Click="MenuLogIn_Click" Text="log in"/>
                 <shell:ApplicationBarMenuItem Click="MenuLocation_Click" Text="add location"/>
                 <shell:ApplicationBarMenuItem Click="MenuRoute_Click" Text="add route" />
             </shell:ApplicationBar.MenuItems>
